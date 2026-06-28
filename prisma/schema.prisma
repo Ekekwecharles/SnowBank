@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  email               String    @unique
+  password            String
+  role                String    @default("user")
+  emailVerified       Boolean   @default(false)
+  verificationToken   String?
+  resetPasswordToken  String?
+  resetPasswordExpiry DateTime?
+  profileImage        String?
+  phone               String?
+  address             String?
+  accountNumber       String    @unique
+  balance             Float     @default(0)
+  pin                 String?
+  transactionLimit    Float?
+  isRestricted        Boolean   @default(false)
+  isSuspended         Boolean   @default(false)
+  restrictedAt        DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  transactions  Transaction[]
+  beneficiaries Beneficiary[]
+  notifications Notification[]
+  activityLogs  ActivityLog[]
+}
+
+model Transaction {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   @db.ObjectId
+  user            User     @relation(fields: [userId], references: [id])
+  type            String
+  amount          Float
+  balanceAfterTx  Float
+  description     String
+  reference       String   @unique
+  receiverName    String?
+  receiverAccount String?
+  receiverBank    String?
+  senderName      String?
+  senderAccount   String?
+  location        String?
+  currency        String   @default("NGN")
+  status          String   @default("success")
+  direction       String
+  category        String?
+  isGenerated     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+}
+
+model Beneficiary {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  user          User     @relation(fields: [userId], references: [id])
+  name          String
+  accountNumber String
+  bankName      String
+  bankCode      String?
+  createdAt     DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  action    String
+  ipAddress String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+}
+
+model AcceptableBank {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  code      String   @unique
+  logo      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model AcceptableAccount {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  accountNumber String   @unique
+  ownerName     String
+  bankName      String
+  bankCode      String
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+}
+
+model AppSettings {
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  defaultTransactionLimit Float   @default(500000)
+  maintenanceMode        Boolean  @default(false)
+  transferFeePercent     Float    @default(0)
+  updatedAt              DateTime @updatedAt
+}
