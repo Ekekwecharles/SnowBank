@@ -1,10 +1,14 @@
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM = "SnowBank <noreply@snowbank.io>";
+const FROM = "SnowBank <noreply@snowbank.com>";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
-export async function sendVerificationEmail(email: string, token: string, name: string) {
+export async function sendVerificationEmail(
+  email: string,
+  token: string,
+  name: string,
+) {
   const url = `${APP_URL}/verify-email?token=${token}`;
   await resend.emails.send({
     from: FROM,
@@ -22,7 +26,11 @@ export async function sendVerificationEmail(email: string, token: string, name: 
   });
 }
 
-export async function sendPasswordResetEmail(email: string, token: string, name: string) {
+export async function sendPasswordResetEmail(
+  email: string,
+  token: string,
+  name: string,
+) {
   const url = `${APP_URL}/reset-password?token=${token}`;
   await resend.emails.send({
     from: FROM,
@@ -63,7 +71,7 @@ export async function sendTransferConfirmationEmail(
           <p style="margin:4px 0;color:#9ca3af;">Reference: <span style="color:#fff;">${reference}</span></p>
           <p style="margin:4px 0;color:#9ca3af;">New Balance: <span style="color:#fff;">₦${balance.toLocaleString("en-NG", { minimumFractionDigits: 2 })}</span></p>
         </div>
-        <p style="color:#6b7280;font-size:12px;">If you did not authorize this transfer, contact support@snowbank.io immediately.</p>
+        <p style="color:#6b7280;font-size:12px;">If you did not authorize this transfer, contact support@snowbank.com immediately.</p>
       </div>
     `,
   });

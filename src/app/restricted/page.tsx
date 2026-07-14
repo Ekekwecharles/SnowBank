@@ -23,23 +23,45 @@ export default async function RestrictedPage() {
         </div>
 
         <h1 className="text-2xl font-bold mb-2">Account Access Restricted</h1>
-        <p className="text-muted-foreground mb-6">Dear <span className="text-foreground font-medium">{user?.name}</span>,</p>
+        <p className="text-muted-foreground mb-6">
+          Dear <span className="text-foreground font-medium">{user?.name}</span>
+          ,
+        </p>
 
         <div className="text-left bg-muted/30 rounded-xl p-4 mb-6 space-y-2 text-sm">
-          <p className="text-muted-foreground">Your account has been flagged due to a transaction that exceeded your approved transfer limit.</p>
+          <p className="text-muted-foreground">
+            Your account has been flagged due to a transaction that exceeded
+            your approved transfer limit.
+          </p>
           <p className="font-medium mt-3">To restore full access:</p>
           <ul className="list-disc list-inside text-muted-foreground space-y-1">
             <li>Contact SnowBank support within 48 hours</li>
-            <li>Email: <span className="text-foreground">support@snowbank.io</span></li>
-            <li>Reference: <span className="font-mono text-foreground">{user?.accountNumber}</span></li>
+            <li>
+              Email:{" "}
+              <span className="text-foreground">support@snowbank.com</span>
+            </li>
+            <li>
+              Reference:{" "}
+              <span className="font-mono text-foreground">
+                {user?.accountNumber}
+              </span>
+            </li>
             {user?.restrictedAt && (
-              <li>Date flagged: <span className="text-foreground">{format(new Date(user.restrictedAt), "MMM d, yyyy 'at' h:mm a")}</span></li>
+              <li>
+                Date flagged:{" "}
+                <span className="text-foreground">
+                  {format(
+                    new Date(user.restrictedAt),
+                    "MMM d, yyyy 'at' h:mm a",
+                  )}
+                </span>
+              </li>
             )}
           </ul>
         </div>
 
         <a
-          href="mailto:support@snowbank.io"
+          href="mailto:support@snowbank.com"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold hover:bg-primary/90 transition"
         >
           <Mail className="h-4 w-4" />

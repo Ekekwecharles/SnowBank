@@ -20,7 +20,11 @@ function LoginPageContent() {
   const verified = searchParams.get("verified");
   const error = searchParams.get("error");
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -78,7 +82,9 @@ function LoginPageContent() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1.5">Email Address</label>
+            <label className="block text-sm font-medium mb-1.5">
+              Email Address
+            </label>
             <input
               {...register("email")}
               type="email"
@@ -86,13 +92,22 @@ function LoginPageContent() {
               className="w-full px-4 py-3 rounded-xl border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary transition"
               placeholder="you@example.com"
             />
-            {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-sm font-medium">Password</label>
-              <Link href="/forgot-password" className="text-xs text-primary hover:underline">Forgot password?</Link>
+              <Link
+                href="/forgot-password"
+                className="text-xs text-primary hover:underline"
+              >
+                Forgot password?
+              </Link>
             </div>
             <div className="relative">
               <input
@@ -107,10 +122,18 @@ function LoginPageContent() {
                 onClick={() => setShowPassword((v) => !v)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
               </button>
             </div>
-            {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="mt-1 text-xs text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <button
@@ -125,13 +148,18 @@ function LoginPageContent() {
 
         <p className="text-center text-sm text-muted-foreground mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-primary hover:underline font-medium">Create one</Link>
+          <Link
+            href="/register"
+            className="text-primary hover:underline font-medium"
+          >
+            Create one
+          </Link>
         </p>
 
         <div className="mt-6 p-4 rounded-xl border border-border bg-muted/30 text-xs text-muted-foreground">
           <p className="font-medium text-foreground mb-1">Demo Credentials</p>
-          <p>User: demo@snowbank.io / Demo@123 / PIN: 1234</p>
-          <p>Admin: admin@snowbank.io / Admin@123</p>
+          <p>User: demo@snowbank.com / Demo@123 / PIN: 1234</p>
+          <p>Admin: admin@snowbank.com / Admin@123</p>
         </div>
       </motion.div>
     </div>

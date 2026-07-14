@@ -10,10 +10,10 @@
 
 ### Demo Credentials
 
-| Role  | Email                   | Password   | PIN  |
-|-------|-------------------------|------------|------|
-| User  | demo@snowbank.io        | Demo@123   | 1234 |
-| Admin | admin@snowbank.io       | Admin@123  | —    |
+| Role  | Email              | Password  | PIN  |
+| ----- | ------------------ | --------- | ---- |
+| User  | demo@snowbank.com  | Demo@123  | 1234 |
+| Admin | admin@snowbank.com | Admin@123 | —    |
 
 ---
 
@@ -32,6 +32,7 @@
 ## Features
 
 ### User Features
+
 - **Secure Authentication** — Registration with email verification, login, forgot/reset password
 - **Dashboard Overview** — Balance card with blur toggle, quick actions, balance trend chart, spending breakdown donut chart
 - **Transfer Money** — 3-step wizard with account lookup, PIN confirmation, confetti success animation
@@ -45,6 +46,7 @@
 - **Notifications** — Real-time bell with unread count, optimistic mark-as-read
 
 ### Admin Features
+
 - **Overview Dashboard** — Stats cards, recent registrations
 - **User Management** — Paginated table, search/filter, status badges
 - **User Detail** — Edit all fields, restrict/suspend toggle, generate 10–500 realistic transactions
@@ -52,6 +54,7 @@
 - **System Settings** — Transaction limits, fees, maintenance mode, bank CRUD, account CRUD
 
 ### Design & UX
+
 - Dark navy + electric blue design aesthetic
 - Framer Motion animations throughout
 - Skeleton loaders on every async operation
@@ -66,6 +69,7 @@
 ## Local Setup
 
 ### Prerequisites
+
 - Node.js 18+
 - MongoDB Atlas account (free tier works)
 - Resend account (for emails)
@@ -112,12 +116,15 @@ Open [http://localhost:3000](http://localhost:3000)
 ## Architecture Decisions
 
 ### Why MongoDB?
+
 MongoDB's document model fits banking data well — transactions embed naturally, and Atlas offers a generous free tier perfect for demos. The flexible schema let me iterate fast on the transaction model without painful migrations.
 
 ### Why NextAuth v5?
+
 Auth.js v5 is the modern standard for Next.js authentication. The JWT strategy with custom callbacks lets me attach `role`, `accountNumber`, `isRestricted`, and `isSuspended` to the session token, enabling O(1) authorization checks in middleware without DB round trips.
 
 ### Why TanStack Query?
+
 Server Actions handle all mutations (transfers, profile updates, PIN changes). TanStack Query handles client-side data fetching with automatic caching, background refetch, and optimistic updates — the combination gives a native-app feel without a full REST or GraphQL layer.
 
 ---
